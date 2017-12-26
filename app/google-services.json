@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "819044056005",
+    "firebase_url": "https://bigdipperv1.firebaseio.com",
+    "project_id": "bigdipperv1",
+    "storage_bucket": "bigdipperv1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819044056005:android:da9eca6fc999b044",
+        "android_client_info": {
+          "package_name": "com.bigdipper.chj.bigdipperv1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "819044056005-9tg2i7q9sms6vvs4pttkktsv20nrfda1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bigdipper.chj.bigdipperv1",
+            "certificate_hash": "6986f3086d76f770895e059beb460439c2b4e4e9"
+          }
+        },
+        {
+          "client_id": "819044056005-f2263v25v4ne07f1eunb2t1uk09pbsrm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7QH4IGQA9gTayFMIEWkStfIAsUw4re6w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "819044056005-f2263v25v4ne07f1eunb2t1uk09pbsrm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
