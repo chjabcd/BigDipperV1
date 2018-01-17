@@ -1,4 +1,4 @@
-package com.bigdipper.chj.bigdipperv1;
+package com.bigdipper.chj.bigdipperv1.service;
 
 /**
  * Created by chj on 2017-12-26.

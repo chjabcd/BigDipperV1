@@ -1,9 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loginactivity_linearlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/background"
     tools:context="com.bigdipper.chj.bigdipperv1.LoginActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:src="@drawable/bigdipper"
+        android:layout_width="80dp"
+        android:layout_height="80dp" />
+    <TextView
+        android:text="Big Dipper"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/loginactivity_edittext_id"
+            android:hint="ID"
+            android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/icon_id"
+            android:background="@drawable/box_login_or_password"
+            android:paddingStart="10dp"
+            android:layout_gravity="center"
+            android:layout_width="280dp"
+            android:layout_height="101px" />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/loginactivity_edittext_password"
+            android:hint="Password"
+            android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/icon_pass"
+            android:background="@drawable/box_login_or_password"
+            android:paddingStart="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+            android:inputType="textPassword"
+            android:layout_width="280dp"
+            android:layout_height="101px" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:background="@drawable/box_login"
+        android:id="@+id/loginactivity_button_login"
+        android:layout_width="836px"
+        android:layout_height="101px" />
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:text="아직 회원이 아니세요?"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:background="@drawable/box_signup"
+        android:layout_marginTop="5dp"
+        android:id="@+id/loginactivity_button_signup"
+        android:layout_width="836px"
+        android:layout_height="101px" />
+
+
+</LinearLayout>

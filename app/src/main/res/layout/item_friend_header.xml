@@ -1,146 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/frienditem_swipe"
     android:layout_width="match_parent"
-    android:layout_height="71dp"
-    app:clickToClose="true">
-
-
-    <LinearLayout
-        android:id="@+id/bottom_wrapper"
-        android:layout_width="160dp"
-        android:layout_height="match_parent"
-        android:background="@android:color/holo_red_dark"
-        android:tag="Bottom1"
-        android:weightSum="1">
-
-        <ImageView
-            android:id="@+id/img_budget"
-            android:layout_width="70dp"
-            android:layout_height="match_parent"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:src="@drawable/ic_account_circle_black_24dp" />
-
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="70dp"
-            android:layout_height="match_parent"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:src="@drawable/ic_people_black_24dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/bottom_wrapper_2"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="@android:color/holo_red_dark"
-        android:tag="Bottom4">
-
-        <ImageView
-            android:id="@+id/edit"
-            android:layout_width="70dp"
-            android:layout_height="match_parent"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:src="@drawable/ic_spa_black_24dp" />
-
-        <ImageView
-            android:id="@+id/check"
-            android:layout_width="70dp"
-            android:layout_height="match_parent"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:src="@drawable/ic_add_to_photos_black_24dp" />
-
-        <ImageView
-            android:id="@+id/delete"
-            android:layout_width="70dp"
-            android:layout_height="match_parent"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:src="@drawable/ic_reorder_black_24dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    <android.support.v7.widget.CardView
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:layout_marginBottom="5dp"
-        app:cardElevation="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    <RelativeLayout
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:src="@drawable/address_line_1"
-            android:id="@+id/frienditem_addressline"
-            android:layout_width="15dp"
-            android:layout_height="71dp" />
-
-        <ImageView
-            android:layout_toRightOf="@+id/frienditem_addressline"
-            android:layout_margin="10dp"
-            android:id="@+id/frienditem_imageview"
-            android:layout_width="50dp"
-            android:layout_height="50dp" />
-
+    android:layout_height="40dp"
+    android:background="@android:color/darker_gray">
 
             <TextView
                 android:text="이름"
                 android:textSize="16dp"
                 android:layout_toRightOf="@id/frienditem_imageview"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/frienditem_id"
+                android:layout_margin="10dp"
+                android:id="@+id/frienditem_header_id"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
-            <TextView
-                android:text="전화번호"
-                android:textSize="12dp"
-                android:layout_toRightOf="@id/frienditem_imageview"
-                android:layout_marginTop="40dp"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/frienditem_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-
-
-            <LinearLayout
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:background="@android:color/darker_gray"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_margin="10dp"
-                    android:id="@+id/frienditem_textview_comment"
-                    android:text="상태메세지"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-
-    </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
-
-    </LinearLayout>
-
-
-</com.daimajia.swipe.SwipeLayout>
+</LinearLayout>

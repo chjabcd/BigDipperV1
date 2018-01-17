@@ -1,4 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item
+        android:id="@+id/action_bigdipper"
+        android:enabled="true"
+        android:title="Main"
+        android:icon="@drawable/ic_reorder_black_24dp"/>
+    <item
+        android:id="@+id/action_interest"
+        android:enabled="true"
+        android:title="d"
+        android:icon="@drawable/ic_spa_black_24dp"/>
+    <item
+        android:id="@+id/action_people"
+        app:showAsAction="always|withText"
+        android:title="e"
+        android:icon="@drawable/ic_people_black_24dp"/>
+    <item
+        android:id="@+id/action_chat"
+        android:enabled="true"
+        android:title="f"
+        android:icon="@drawable/ic_chat_black_24dp"/>
+    <item
+        android:id="@+id/action_info"
+        android:enabled="true"
+        android:title="w"
+        android:icon="@drawable/ic_account_circle_black_24dp"/>
 </menu>

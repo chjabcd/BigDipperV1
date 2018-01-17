@@ -1,4 +1,4 @@
-package com.bigdipper.chj.bigdipperv1;
+package com.bigdipper.chj.bigdipperv1.service;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -10,6 +10,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
+import com.bigdipper.chj.bigdipperv1.MainActivity;
+import com.bigdipper.chj.bigdipperv1.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
