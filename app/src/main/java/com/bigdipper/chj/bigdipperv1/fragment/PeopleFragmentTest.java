@@ -43,7 +43,7 @@ import java.util.List;
  * Created by chj on 2017-12-27.
  */
 
-public class PeopleFragment extends Fragment{
+public class PeopleFragmentTest extends Fragment{
 
     RecyclerView recyclerView;
     DrawerLayout drawerLayout;

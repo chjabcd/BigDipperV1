@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,7 +27,6 @@ import com.bigdipper.chj.bigdipperv1.R;
 import com.bigdipper.chj.bigdipperv1.model.PhoneBookModel;
 import com.bigdipper.chj.bigdipperv1.model.UserModel;
 import com.bigdipper.chj.bigdipperv1.people.InfoActivity;
-import com.bigdipper.chj.bigdipperv1.service.SoundSearcher;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.daimajia.swipe.SwipeLayout;
@@ -45,7 +43,7 @@ import java.util.List;
  * Created by chj on 2017-12-27.
  */
 
-public class PeopleFragment extends Fragment{
+public class PeopleFragmentUserModel extends Fragment{
 
     RecyclerView recyclerView;
     DrawerLayout drawerLayout;

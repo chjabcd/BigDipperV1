@@ -8,25 +8,128 @@
     <FrameLayout
         android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="130dp">
+        android:layout_height="230dp">
 
         <ImageView
             android:background="@android:color/darker_gray"
             android:layout_width="match_parent"
-            android:layout_height="130dp" />
+            android:layout_height="230dp" />
 
-        <ImageView
-            android:src="@drawable/ic_chat_black_24dp"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center"
-            android:layout_width="50dp"
-            android:layout_height="50dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/fragment_info_profile"
+                android:src="@drawable/ic_chat_black_24dp"
+                android:layout_marginTop="50dp"
+                android:layout_gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+                <ImageView
+                    android:src="@drawable/ic_account_circle_black_24dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/fragment_info_hello"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+                <ImageView
+                    android:src="@drawable/ic_account_circle_black_24dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/fragment_info_chat"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+                <ImageView
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_account_circle_black_24dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/fragment_info_call"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+                <ImageView
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_account_circle_black_24dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/fragment_info_sns"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </FrameLayout>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="이름 : "
+                android:layout_width="100dp"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:hint="이름"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="전화번호 : "
+                android:layout_width="100dp"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:hint="전화번호"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="주소 : "
+                android:layout_width="100dp"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:hint="주소"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
     <Button
         android:text="현재 상태 메세지"
-        android:id="@+id/accountFragment_button_comment"
+        android:id="@+id/infomationFragment_button_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:text="주소록 가져오기"
+        android:id="@+id/infomationFragment_button_phonebook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
