@@ -8,11 +8,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigdipper.chj.bigdipperv1.fragment.PeopleFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -26,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
 
     private Button login;
-    private Button signup;
+    private TextView signup;
     private LinearLayout linearLayout;
     private FirebaseRemoteConfig firebaseRemoteConfig;
     private FirebaseAuth firebaseAuth;
@@ -36,6 +40,16 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Window window = getWindow();
+        View view = getWindow().getDecorView();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(Color.parseColor("#F9FBFA"));//F9FBFA
+
+        }
+        view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
 
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
@@ -58,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         login = (Button)findViewById(R.id.loginactivity_button_login);
-        signup = (Button)findViewById(R.id.loginactivity_button_signup);
+        signup = (TextView) findViewById(R.id.loginactivity_button_signup);
 //       cgnup.setBackgroundColor(Color.parseColor(button_background));
 
         login.setOnClickListener(new View.OnClickListener() {

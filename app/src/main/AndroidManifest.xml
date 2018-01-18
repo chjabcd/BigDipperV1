@@ -33,7 +33,8 @@
 
         <activity android:name=".people.InfoActivity" />
         <activity android:name=".fragment.InfoFragment" />
-        <activity android:name=".InterestActivity"></activity>
+        <activity android:name=".InterestActivity" />
+        <activity android:name=".infomation.InfomationEditActivity"></activity>
     </application>
 
 </manifest>

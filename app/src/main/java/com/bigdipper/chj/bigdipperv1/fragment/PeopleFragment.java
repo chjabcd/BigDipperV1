@@ -70,44 +70,41 @@ public class PeopleFragment extends Fragment{
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
         setHasOptionsMenu(true);
 
-        toolbar = (Toolbar)view.findViewById(R.id.toolbar_people);
-        drawerLayout = (DrawerLayout)view.findViewById(R.id.fragment_people_drawerlayout);
+//        toolbar = (Toolbar)view.findViewById(R.id.toolbar_people);
+//        drawerLayout = (DrawerLayout)view.findViewById(R.id.fragment_people_drawerlayout);
         MainActivity activity = (MainActivity)getActivity();
         activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
-        title = (TextView)view.findViewById(R.id.toolbar_people_title);
-        toolbarCount = (TextView)view.findViewById(R.id.toolbar_people_count);
-        int count = recyclerView.getAdapter().getItemCount();
-
-        toolbarCount.setText(""+ count +"");
-        System.out.println(count +"");
+//        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        toolbarCount = (TextView)view.findViewById(R.id.toolbar_people_count);
+//        int count = recyclerView.getAdapter().getItemCount();
 
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(activity,drawerLayout,toolbar,0,0);
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
 
-        final NavigationView navigationView = (NavigationView)view.findViewById(R.id.fragment_people_navigationview_right);
-        toolbar.findViewById(R.id.toolbar_people_email).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(GravityCompat.END);
-            }
-        });
-        navigationView.bringChildToFront(view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(activity,drawerLayout,toolbar,0,0);
+//        drawerLayout.setDrawerListener(toggle);
+//        toggle.syncState();
 
-                drawerLayout.closeDrawer(GravityCompat.END);
-
-                return true;
-            }
-        });
+//        final NavigationView navigationView = (NavigationView)view.findViewById(R.id.fragment_people_navigationview_right);
+//        toolbar.findViewById(R.id.toolbar_people_email).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                drawerLayout.openDrawer(GravityCompat.END);
+//            }
+//        });
+//        navigationView.bringChildToFront(view);
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//
+//                drawerLayout.closeDrawer(GravityCompat.END);
+//
+//                return true;
+//            }
+//        });
 
         searchView = (SearchView)view.findViewById(R.id.toolbar_people_search);
 
@@ -154,15 +151,12 @@ public class PeopleFragment extends Fragment{
                     for(DataSnapshot snapshot : dataSnapshot.getChildren()){
 
                         UserModel userModel = snapshot.getValue(UserModel.class);
-                        UserModel.PhoneBook phoneBook = new UserModel.PhoneBook();
                         if(userModel.uid.equals(myUid)){
                             continue;
                         }
-
                         if(userModel.phonebook != null){
 
                         }
-
                         userModels.add(userModel);
                         System.out.println(userModels.size());
                     }
@@ -175,24 +169,24 @@ public class PeopleFragment extends Fragment{
                 }
             });
 
-            FirebaseDatabase.getInstance().getReference().child("users").child(myUid).child("phonebook").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    phoneBooks.clear();
-                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                        PhoneBookModel.Id phoneBook = snapshot.getValue(PhoneBookModel.Id.class);
-                        phoneBook.uid = snapshot.getKey();
-                        phoneBooks.add(phoneBook);
-
-                    }
-                    notifyDataSetChanged();
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
+//            FirebaseDatabase.getInstance().getReference().child("users").child(myUid).child("phonebook").addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    phoneBooks.clear();
+//                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+//                        PhoneBookModel.Id phoneBook = snapshot.getValue(PhoneBookModel.Id.class);
+//                        phoneBook.uid = snapshot.getKey();
+//                        phoneBooks.add(phoneBook);
+//
+//                    }
+//                    notifyDataSetChanged();
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
         }
 
         @Override
@@ -210,9 +204,36 @@ public class PeopleFragment extends Fragment{
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-            ((CustomViewHolder)holder).imageView.setImageResource(R.drawable.bigdipper);
-            ((CustomViewHolder)holder).textViewId.setText(phoneBooks.get(position).name);
-            ((CustomViewHolder)holder).textViewPhone.setText(phoneBooks.get(position).phoneNumber);
+            Glide.with
+                    (holder.itemView.getContext())
+                    .load(userModels.get(position).profileImageUrl)
+                    .apply(new RequestOptions().circleCrop())
+                    .into(((CustomViewHolder)holder).imageView);
+            ((CustomViewHolder)holder).textViewId.setText(userModels.get(position).userName);
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), InfoActivity.class);
+                    intent.putExtra("destinationUid",userModels.get(position).uid);
+                    ActivityOptions activityOptions = null;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                        activityOptions = ActivityOptions.makeCustomAnimation(view.getContext(), R.anim.fromtop,R.anim.tostop);
+                        startActivity(intent,activityOptions.toBundle());
+                    }
+//                    showDialog(view.getContext());
+//                    getFragmentManager().beginTransaction().replace(R.id.mainactivity_framelayout_info,new InfoFragment()).commit();
+
+                }
+            });
+            if(userModels.get(position).comment != null) {
+                ((CustomViewHolder) holder).textView_comment.setText(userModels.get(position).comment);
+            }
+
+
+//            ((CustomViewHolder)holder).imageView.setImageResource(R.drawable.bigdipper);
+//            ((CustomViewHolder)holder).textViewId.setText(phoneBooks.get(position).name);
+//            ((CustomViewHolder)holder).textViewPhone.setText(phoneBooks.get(position).phoneNumber);
 //            holder.itemView.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View view) {
@@ -265,7 +286,7 @@ public class PeopleFragment extends Fragment{
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), InfoActivity.class);
-                    intent.putExtra("friendUid",phoneBooks.get(position).uid);
+                    intent.putExtra("destinationUid",userModels.get(position).uid);
                     ActivityOptions activityOptions = null;
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
                         activityOptions = ActivityOptions.makeCustomAnimation(view.getContext(), R.anim.fromtop,R.anim.tostop);
@@ -280,7 +301,7 @@ public class PeopleFragment extends Fragment{
 
         @Override
         public int getItemCount() {
-            return phoneBooks.size();
+            return userModels.size();
         }
 
 

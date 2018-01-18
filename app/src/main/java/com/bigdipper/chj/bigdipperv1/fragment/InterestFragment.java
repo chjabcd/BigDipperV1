@@ -10,16 +10,19 @@ import android.view.ViewGroup;
 import com.bigdipper.chj.bigdipperv1.R;
 
 /**
- * Created by chj on 2018-01-03.
+ * Created by chj on 2018-01-18.
  */
 
-public class InfoFragment extends Fragment {
+public class InterestFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_info,container,false);
-        view.bringToFront();
+        View view = inflater.inflate(R.layout.fragment_interest,container,false);
+
+
         return view;
     }
+
+
 }

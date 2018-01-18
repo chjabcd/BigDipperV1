@@ -1,6 +1,8 @@
 package com.bigdipper.chj.bigdipperv1;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -11,6 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.bigdipper.chj.bigdipperv1.chat.MessageActivity;
@@ -40,16 +45,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getFragmentManager().beginTransaction().replace(R.id.mainactivity_framelayout,new PeopleFragment()).commit();
+
+        Window window = getWindow();
+        View view = getWindow().getDecorView();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(Color.parseColor("#000000"));//F9FBFA
+
+        }
+        //view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
         ActionBar actionBar = getSupportActionBar();
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_drawerlayout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,0,0);
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
+//        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
+//
+//        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_drawerlayout);
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,0,0);
+//        drawerLayout.setDrawerListener(toggle);
+//        toggle.syncState();
 
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
@@ -107,15 +124,8 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
         passPushTokenToServer();
     }
-
-
-
-
-
-
 
     void passPushTokenToServer(){
 
@@ -126,10 +136,4 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseDatabase.getInstance().getReference().child("users").child(uid).updateChildren(map);
     }
-
-
-
-
-
-
 }

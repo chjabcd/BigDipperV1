@@ -13,6 +13,16 @@ public class UserModel {
     public String pushToken;
     public String comment;
 
+    public int gender;
+    public String birthday;
+    public String phoneNumber;
+    public String address;
+    public String addressDetail;
+    public String people;
+    public String office;
+    public String interest;
+
+
     public Map<String,PhoneBook> phonebook;
 
     public static class PhoneBook{

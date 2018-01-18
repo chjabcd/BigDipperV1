@@ -61,14 +61,11 @@ public class ChatFragment extends Fragment{
         setHasOptionsMenu(true);
 
         toolbar = (Toolbar)view.findViewById(R.id.toolbar_chat);
-        drawerLayout = (DrawerLayout)view.findViewById(R.id.fragment_chat_drawerlayout);
+
         MainActivity activity = (MainActivity)getActivity();
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(activity,drawerLayout,toolbar,0,0);
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
 
         return view;
     }
