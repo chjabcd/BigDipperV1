@@ -97,18 +97,18 @@ public class PeopleFragmentUserModel extends Fragment{
             }
         });
 
-        SearchView searchView = (SearchView)view.findViewById(R.id.toolbar_people_search);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+//        SearchView searchView = (SearchView)view.findViewById(R.id.toolbar_people_search);
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return false;
+//            }
+//        });
 
 
         return view;

@@ -6,6 +6,24 @@
         android:id="@+id/search"
         android:icon="@android:drawable/ic_menu_search"
         android:title="Search"
-        app:showAsAction="ifRoom|collapseActionView"
+        app:showAsAction="ifRoom"
         app:actionViewClass="android.support.v7.widget.SearchView"/>
+    <item
+        android:id="@+id/menu_login"
+        android:orderInCategory="100"
+        android:title="로그인"
+        />
+
+    <item
+        android:id="@+id/menu_logout"
+        android:orderInCategory="100"
+        android:title="로그아웃"
+        />
+
+    <item
+        android:id="@+id/menu_a"
+        android:orderInCategory="100"
+        android:title="다음"
+        />
+
 </menu>

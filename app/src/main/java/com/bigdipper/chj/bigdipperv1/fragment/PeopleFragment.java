@@ -3,6 +3,7 @@ package com.bigdipper.chj.bigdipperv1.fragment;
 import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -74,10 +75,13 @@ public class PeopleFragment extends Fragment{
 
         setHasOptionsMenu(true);
 
-//        toolbar = (Toolbar)view.findViewById(R.id.toolbar_people);
-//        drawerLayout = (DrawerLayout)view.findViewById(R.id.fragment_people_drawerlayout);
+        toolbar = (Toolbar)view.findViewById(R.id.toolbar_people);
+
         MainActivity activity = (MainActivity)getActivity();
         activity.setSupportActionBar(toolbar);
+        toolbar.setTitle("People");
+
+        //        drawerLayout = (DrawerLayout)view.findViewById(R.id.fragment_people_drawerlayout);
 //        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
 //        toolbarCount = (TextView)view.findViewById(R.id.toolbar_people_count);
 //        int count = recyclerView.getAdapter().getItemCount();
@@ -106,32 +110,58 @@ public class PeopleFragment extends Fragment{
 //            }
 //        });
 
-        searchView = (SearchView)view.findViewById(R.id.toolbar_people_search);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-
-                newText = newText.toLowerCase();
-                ArrayList<PhoneBookModel.Id> newList = new ArrayList<>();
-                for(PhoneBookModel.Id name : arrayList){
-                    String nameN = name.name.toLowerCase();
-                    if(nameN.contains(newText)){
-                        newList.add(name);
-                    }
-                }
-                return false;
-            }
-        });
+//        searchView = (SearchView)view.findViewById(R.id.toolbar_people_search);
+//
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//
+//                newText = newText.toLowerCase();
+//                ArrayList<PhoneBookModel.Id> newList = new ArrayList<>();
+//                for(PhoneBookModel.Id name : arrayList){
+//                    String nameN = name.name.toLowerCase();
+//                    if(nameN.contains(newText)){
+//                        newList.add(name);
+//                    }
+//                }
+//                return false;
+//            }
+//        });
 
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.search_people, menu);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                recyclerView.setAdapter(new PeopleFragmentRecyclerViewAdapter(s));
+                return true;
+            }
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                recyclerView.setAdapter(new PeopleFragmentRecyclerViewAdapter());
+
+                return false;
+            }
+        });
     }
 
 
@@ -140,6 +170,31 @@ public class PeopleFragment extends Fragment{
         List<UserModel> userModels;
         List<PhoneBookModel.Id> phoneBooks;
         List<PhoneBookModel.Id> phoneBooksFilter;
+
+        public PeopleFragmentRecyclerViewAdapter(final String s){
+            userModels = new ArrayList<>();
+            final String myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    userModels.clear();
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+
+                        UserModel userModel = snapshot.getValue(UserModel.class);
+                        if(SoundSearcher.matchStringAll(userModel.userName,s)){
+                            userModels.add(userModel);
+                        }
+                    }
+                    notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
         public PeopleFragmentRecyclerViewAdapter() {
             userModels = new ArrayList<>();
             phoneBooks = new ArrayList<>();
@@ -158,7 +213,6 @@ public class PeopleFragment extends Fragment{
 
                         }
                         userModels.add(userModel);
-                        System.out.println(userModels.size());
                     }
                     notifyDataSetChanged();
                 }
