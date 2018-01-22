@@ -50,90 +50,29 @@ import java.util.List;
  * Created by chj on 2017-12-27.
  */
 
-public class PeopleFragment extends Fragment{
+public class PeopleFragment extends Fragment {
 
     RecyclerView recyclerView;
-    DrawerLayout drawerLayout;
     RecyclerView.Adapter adapter;
     Toolbar toolbar;
-    TextView title;
-    TextView toolbarCount;
-    SearchView searchView;
-    ArrayList<PhoneBookModel.Id> arrayList = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_people,container,false);
+        View view = inflater.inflate(R.layout.fragment_people, container, false);
         adapter = new PeopleFragmentRecyclerViewAdapter();
-        recyclerView = (RecyclerView)view.findViewById(R.id.peoplefragment_recyclerview);
+        recyclerView = (RecyclerView) view.findViewById(R.id.peoplefragment_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
 
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-
         setHasOptionsMenu(true);
 
-        toolbar = (Toolbar)view.findViewById(R.id.toolbar_people);
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar_people);
 
-        MainActivity activity = (MainActivity)getActivity();
+        MainActivity activity = (MainActivity) getActivity();
         activity.setSupportActionBar(toolbar);
-        toolbar.setTitle("People");
-
-        //        drawerLayout = (DrawerLayout)view.findViewById(R.id.fragment_people_drawerlayout);
-//        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
-//        toolbarCount = (TextView)view.findViewById(R.id.toolbar_people_count);
-//        int count = recyclerView.getAdapter().getItemCount();
-
-
-
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(activity,drawerLayout,toolbar,0,0);
-//        drawerLayout.setDrawerListener(toggle);
-//        toggle.syncState();
-
-//        final NavigationView navigationView = (NavigationView)view.findViewById(R.id.fragment_people_navigationview_right);
-//        toolbar.findViewById(R.id.toolbar_people_email).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                drawerLayout.openDrawer(GravityCompat.END);
-//            }
-//        });
-//        navigationView.bringChildToFront(view);
-//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//
-//                drawerLayout.closeDrawer(GravityCompat.END);
-//
-//                return true;
-//            }
-//        });
-
-//        searchView = (SearchView)view.findViewById(R.id.toolbar_people_search);
-//
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//
-//                newText = newText.toLowerCase();
-//                ArrayList<PhoneBookModel.Id> newList = new ArrayList<>();
-//                for(PhoneBookModel.Id name : arrayList){
-//                    String nameN = name.name.toLowerCase();
-//                    if(nameN.contains(newText)){
-//                        newList.add(name);
-//                    }
-//                }
-//                return false;
-//            }
-//        });
-
+        activity.setTitle("People");
 
         return view;
     }
@@ -149,9 +88,11 @@ public class PeopleFragment extends Fragment{
                 recyclerView.setAdapter(new PeopleFragmentRecyclerViewAdapter(s));
                 return true;
             }
+
             @Override
             public boolean onQueryTextChange(String s) {
-                return false;
+                recyclerView.setAdapter(new PeopleFragmentRecyclerViewAdapter(s));
+                return true;
             }
         });
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
@@ -165,23 +106,23 @@ public class PeopleFragment extends Fragment{
     }
 
 
-    class PeopleFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    class PeopleFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         List<UserModel> userModels;
         List<PhoneBookModel.Id> phoneBooks;
         List<PhoneBookModel.Id> phoneBooksFilter;
 
-        public PeopleFragmentRecyclerViewAdapter(final String s){
+        public PeopleFragmentRecyclerViewAdapter(final String s) {
             userModels = new ArrayList<>();
             final String myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     userModels.clear();
-                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
                         UserModel userModel = snapshot.getValue(UserModel.class);
-                        if(SoundSearcher.matchStringAll(userModel.userName,s)){
+                        if (SoundSearcher.matchStringAll(userModel.userName, s)) {
                             userModels.add(userModel);
                         }
                     }
@@ -203,13 +144,13 @@ public class PeopleFragment extends Fragment{
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     userModels.clear();
-                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
                         UserModel userModel = snapshot.getValue(UserModel.class);
-                        if(userModel.uid.equals(myUid)){
+                        if (userModel.uid.equals(myUid)) {
                             continue;
                         }
-                        if(userModel.phonebook != null){
+                        if (userModel.phonebook != null) {
 
                         }
                         userModels.add(userModel);
@@ -222,30 +163,11 @@ public class PeopleFragment extends Fragment{
 
                 }
             });
-
-//            FirebaseDatabase.getInstance().getReference().child("users").child(myUid).child("phonebook").addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    phoneBooks.clear();
-//                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-//                        PhoneBookModel.Id phoneBook = snapshot.getValue(PhoneBookModel.Id.class);
-//                        phoneBook.uid = snapshot.getKey();
-//                        phoneBooks.add(phoneBook);
-//
-//                    }
-//                    notifyDataSetChanged();
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            });
         }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend,parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend, parent, false);
 
             SwipeLayout item = (SwipeLayout) view.findViewById(R.id.frienditem_swipe);
             item.setShowMode(SwipeLayout.ShowMode.PullOut);
@@ -262,44 +184,25 @@ public class PeopleFragment extends Fragment{
                     (holder.itemView.getContext())
                     .load(userModels.get(position).profileImageUrl)
                     .apply(new RequestOptions().circleCrop())
-                    .into(((CustomViewHolder)holder).imageView);
-            ((CustomViewHolder)holder).textViewId.setText(userModels.get(position).userName);
+                    .into(((CustomViewHolder) holder).imageView);
+            ((CustomViewHolder) holder).textViewId.setText(userModels.get(position).userName);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), InfoActivity.class);
-                    intent.putExtra("destinationUid",userModels.get(position).uid);
+                    intent.putExtra("destinationUid", userModels.get(position).uid);
                     ActivityOptions activityOptions = null;
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                        activityOptions = ActivityOptions.makeCustomAnimation(view.getContext(), R.anim.fromtop,R.anim.tostop);
-                        startActivity(intent,activityOptions.toBundle());
+                        activityOptions = ActivityOptions.makeCustomAnimation(view.getContext(), R.anim.fromtop, R.anim.tostop);
+                        startActivity(intent, activityOptions.toBundle());
                     }
-//                    showDialog(view.getContext());
-//                    getFragmentManager().beginTransaction().replace(R.id.mainactivity_framelayout_info,new InfoFragment()).commit();
 
                 }
             });
-            if(userModels.get(position).comment != null) {
+            if (userModels.get(position).comment != null) {
                 ((CustomViewHolder) holder).textView_comment.setText(userModels.get(position).comment);
             }
-
-
-//            ((CustomViewHolder)holder).imageView.setImageResource(R.drawable.bigdipper);
-//            ((CustomViewHolder)holder).textViewId.setText(phoneBooks.get(position).name);
-//            ((CustomViewHolder)holder).textViewPhone.setText(phoneBooks.get(position).phoneNumber);
-//            holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Intent intent = new Intent(view.getContext(), InfoActivity.class);
-//                    intent.putExtra("destinationUid",userModels.get(position).uid);
-//                    ActivityOptions activityOptions = null;
-//                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-//                        activityOptions = ActivityOptions.makeCustomAnimation(view.getContext(), R.anim.fromtop,R.anim.tostop);
-//                        startActivity(intent,activityOptions.toBundle());
-//                    }
-//                }
-//            });
             ((CustomViewHolder) holder).imageView_hello.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -340,15 +243,14 @@ public class PeopleFragment extends Fragment{
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), InfoActivity.class);
-                    intent.putExtra("destinationUid",userModels.get(position).uid);
+                    intent.putExtra("destinationUid", userModels.get(position).uid);
                     ActivityOptions activityOptions = null;
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                        activityOptions = ActivityOptions.makeCustomAnimation(view.getContext(), R.anim.fromtop,R.anim.tostop);
-                        startActivity(intent,activityOptions.toBundle());
+                        activityOptions = ActivityOptions.makeCustomAnimation(view.getContext(), R.anim.fromtop, R.anim.tostop);
+                        startActivity(intent, activityOptions.toBundle());
                     }
                 }
             });
-
 
 
         }
@@ -364,71 +266,22 @@ public class PeopleFragment extends Fragment{
             public TextView textViewId;
             public TextView textViewPhone;
             public TextView textView_comment;
-            public ImageView imageView_hello,imageView_chat,imageView_call,imageView_sns,imageView_hide,imageView_info;
+            public ImageView imageView_hello, imageView_chat, imageView_call, imageView_sns, imageView_hide, imageView_info;
 
             public CustomViewHolder(View view) {
                 super(view);
-                imageView = (ImageView)view.findViewById(R.id.frienditem_imageview);
-                textViewId = (TextView)view.findViewById(R.id.frienditem_id);
-                textViewPhone = (TextView)view.findViewById(R.id.frienditem_phone);
-                textView_comment = (TextView)view.findViewById(R.id.frienditem_textview_comment);
-                imageView_hello = (ImageView)view.findViewById(R.id.frienditem_hello);
-                imageView_chat = (ImageView)view.findViewById(R.id.frienditem_chat);
-                imageView_call = (ImageView)view.findViewById(R.id.frienditem_call);
-                imageView_sns = (ImageView)view.findViewById(R.id.frienditem_sns);
-                imageView_hide = (ImageView)view.findViewById(R.id.frienditem_hide);
-                imageView_info = (ImageView)view.findViewById(R.id.frienditem_infomation);
+                imageView = (ImageView) view.findViewById(R.id.frienditem_imageview);
+                textViewId = (TextView) view.findViewById(R.id.frienditem_id);
+                textViewPhone = (TextView) view.findViewById(R.id.frienditem_phone);
+                textView_comment = (TextView) view.findViewById(R.id.frienditem_textview_comment);
+                imageView_hello = (ImageView) view.findViewById(R.id.frienditem_hello);
+                imageView_chat = (ImageView) view.findViewById(R.id.frienditem_chat);
+                imageView_call = (ImageView) view.findViewById(R.id.frienditem_call);
+                imageView_sns = (ImageView) view.findViewById(R.id.frienditem_sns);
+                imageView_hide = (ImageView) view.findViewById(R.id.frienditem_hide);
+                imageView_info = (ImageView) view.findViewById(R.id.frienditem_infomation);
             }
         }
-        public void setFilter(ArrayList<PhoneBookModel.Id> newList){
-            phoneBooksFilter = new ArrayList<>();
-            phoneBooksFilter.addAll(newList);
-            notifyDataSetChanged();
-        }
+
     }
-
-
-    //    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.navigationview_main_drawer_people_left,menu);
-//        super.onCreateOptionsMenu(menu, inflater);
-//    }
-
-//    void showDialog(Context context) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(context,android.R.style.Theme_Holo_Light);
-//
-//        LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-//        View view = layoutInflater.inflate(R.layout.dialog_info,null);
-//
-//        builder.setView(view);
-//
-//        AlertDialog dialog = builder.create();
-//        dialog.getWindow().getAttributes().windowAnimations = R.style.CustomAnim;
-//        dialog.show();
-//    }
-
-
-
-//    FirebaseDatabase.getInstance().getReference().child("users").child(myUid).child("phonebook").addValueEventListener(new ValueEventListener() {
-//        @Override
-//        public void onDataChange(DataSnapshot dataSnapshot) {
-//            for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-//                UserModel userModel = snapshot.getValue(UserModel.class);
-//                userModels.add(userModel);
-//            }
-//            notifyDataSetChanged();
-//        }
-//
-//        @Override
-//        public void onCancelled(DatabaseError databaseError) {
-//
-//        }
-//    });
-
-
 }
