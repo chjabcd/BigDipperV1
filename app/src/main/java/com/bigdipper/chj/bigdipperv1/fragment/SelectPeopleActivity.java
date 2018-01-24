@@ -1,24 +1,18 @@
 package com.bigdipper.chj.bigdipperv1.fragment;
 
 import android.app.ActivityOptions;
-import android.app.Fragment;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bigdipper.chj.bigdipperv1.MainActivity;
 import com.bigdipper.chj.bigdipperv1.R;
 import com.bigdipper.chj.bigdipperv1.model.HeaderModel;
 import com.bigdipper.chj.bigdipperv1.model.ListModel;
@@ -36,75 +30,19 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by chj on 2017-12-27.
- */
-
-public class PeopleFragment extends Fragment {
-
-    RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
-    Toolbar toolbar;
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_people, container, false);
-        adapter = new PeopleFragmentRecyclerViewAdapter();
-        recyclerView = (RecyclerView) view.findViewById(R.id.peoplefragment_recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
-        recyclerView.setAdapter(adapter);
-        recyclerView.setHasFixedSize(true);
-
-        setHasOptionsMenu(true);
-
-        toolbar = (Toolbar) view.findViewById(R.id.toolbar_people);
-
-        MainActivity activity = (MainActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-        activity.setTitle("People");
-
-        FloatingActionButton floatingActionButton = (FloatingActionButton)view.findViewById(R.id.peoplefragment_floatingButtom);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(view.getContext(),SelectPeopleActivity.class));
-            }
-        });
-
-        return view;
-    }
+public class SelectPeopleActivity extends AppCompatActivity {
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_people, menu);
-        SearchView searchView = (SearchView) menu.findItem(R.id.menu_people_search).getActionView();
-        searchView.setMaxWidth(Integer.MAX_VALUE);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                recyclerView.setAdapter(new PeopleFragmentRecyclerViewAdapter(s));
-                return true;
-            }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_select_people);
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                recyclerView.setAdapter(new PeopleFragmentRecyclerViewAdapter(s));
-                return true;
-            }
-        });
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                recyclerView.setAdapter(new PeopleFragmentRecyclerViewAdapter());
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.select_people_activity_recyclerview);
+        recyclerView.setAdapter(new SelectPeopleRecyclerViewAdapter());
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-                return false;
-            }
-        });
     }
-
-
-    class PeopleFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    class SelectPeopleRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         List<UserModel> userModels;
 
@@ -113,7 +51,7 @@ public class PeopleFragment extends Fragment {
 
         List<ListModel> list;
 
-        public PeopleFragmentRecyclerViewAdapter(final String s) {
+        public SelectPeopleRecyclerViewAdapter(final String s) {
             userModels = new ArrayList<>();
             list = new ArrayList<>();
             final String myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -141,7 +79,7 @@ public class PeopleFragment extends Fragment {
             });
         }
 
-        public PeopleFragmentRecyclerViewAdapter() {
+        public SelectPeopleRecyclerViewAdapter() {
             userModels = new ArrayList<>();
             list = new ArrayList<>();
             final String myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -175,7 +113,7 @@ public class PeopleFragment extends Fragment {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             if(viewType == TYPE_ITEM) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend, parent, false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend_select, parent, false);
                 return new CustomViewHolder(view);
             }else if(viewType == TYPE_HEADER){
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend_header, parent, false);
@@ -244,6 +182,7 @@ public class PeopleFragment extends Fragment {
             public TextView textViewPhone;
             public TextView textView_comment;
             public ImageView imageView_hello, imageView_chat, imageView_call, imageView_sns, imageView_hide, imageView_info;
+            public CheckBox checkBox;
 
             public CustomViewHolder(View view) {
                 super(view);
@@ -251,6 +190,7 @@ public class PeopleFragment extends Fragment {
                 textViewId = (TextView) view.findViewById(R.id.frienditem_id);
                 textViewPhone = (TextView) view.findViewById(R.id.frienditem_phone);
                 textView_comment = (TextView) view.findViewById(R.id.frienditem_textview_comment);
+                checkBox = (CheckBox)view.findViewById(R.id.frienditem_checkbox);
             }
         }
         private class CustomHeaderViewHolder extends RecyclerView.ViewHolder {

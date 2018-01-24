@@ -34,7 +34,8 @@
         <activity android:name=".people.InfoActivity" />
         <activity android:name=".fragment.InfoFragment" />
         <activity android:name=".InterestActivity" />
-        <activity android:name=".infomation.InfomationEditActivity"></activity>
+        <activity android:name=".infomation.InfomationEditActivity" />
+        <activity android:name=".fragment.SelectPeopleActivity"></activity>
     </application>
 
 </manifest>

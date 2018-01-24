@@ -7,7 +7,7 @@ import java.util.Map;
  * Created by chj on 2018-01-23.
  */
 
-public class InterestModel {
+public class InterestModel extends InterestListModel{
 
     public String interestUid;
     public String interestName;
