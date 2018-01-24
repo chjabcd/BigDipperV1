@@ -3,17 +3,8 @@ package com.bigdipper.chj.bigdipperv1.fragment;
 import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -21,22 +12,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bigdipper.chj.bigdipperv1.MainActivity;
 import com.bigdipper.chj.bigdipperv1.R;
-import com.bigdipper.chj.bigdipperv1.model.PhoneBookModel;
+import com.bigdipper.chj.bigdipperv1.model.HeaderModel;
+import com.bigdipper.chj.bigdipperv1.model.ListModel;
 import com.bigdipper.chj.bigdipperv1.model.UserModel;
 import com.bigdipper.chj.bigdipperv1.people.InfoActivity;
 import com.bigdipper.chj.bigdipperv1.service.SoundSearcher;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.daimajia.swipe.SwipeLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -79,8 +68,8 @@ public class PeopleFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.search_people, menu);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        inflater.inflate(R.menu.menu_people, menu);
+        SearchView searchView = (SearchView) menu.findItem(R.id.menu_people_search).getActionView();
         searchView.setMaxWidth(Integer.MAX_VALUE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -109,11 +98,15 @@ public class PeopleFragment extends Fragment {
     class PeopleFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         List<UserModel> userModels;
-        List<PhoneBookModel.Id> phoneBooks;
-        List<PhoneBookModel.Id> phoneBooksFilter;
+
+        private static final int TYPE_HEADER = 0;
+        private static final int TYPE_ITEM = 1;
+
+        List<ListModel> list;
 
         public PeopleFragmentRecyclerViewAdapter(final String s) {
             userModels = new ArrayList<>();
+            list = new ArrayList<>();
             final String myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
                 @Override
@@ -122,8 +115,11 @@ public class PeopleFragment extends Fragment {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
                         UserModel userModel = snapshot.getValue(UserModel.class);
+                        if (userModel.uid.equals(myUid)) {
+                            continue;
+                        }
                         if (SoundSearcher.matchStringAll(userModel.userName, s)) {
-                            userModels.add(userModel);
+                            list.add(userModel);
                         }
                     }
                     notifyDataSetChanged();
@@ -138,22 +134,24 @@ public class PeopleFragment extends Fragment {
 
         public PeopleFragmentRecyclerViewAdapter() {
             userModels = new ArrayList<>();
-            phoneBooks = new ArrayList<>();
+            list = new ArrayList<>();
             final String myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     userModels.clear();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
                         UserModel userModel = snapshot.getValue(UserModel.class);
                         if (userModel.uid.equals(myUid)) {
                             continue;
                         }
-                        if (userModel.phonebook != null) {
-
-                        }
                         userModels.add(userModel);
+                    }
+                    HeaderModel header = new HeaderModel();
+                    header.setHeader("친구");
+                    list.add(header);
+                    for(int i=0;i<userModels.size();i++){
+                        list.add(userModels.get(i));
                     }
                     notifyDataSetChanged();
                 }
@@ -167,99 +165,69 @@ public class PeopleFragment extends Fragment {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend, parent, false);
-
-            SwipeLayout item = (SwipeLayout) view.findViewById(R.id.frienditem_swipe);
-            item.setShowMode(SwipeLayout.ShowMode.PullOut);
-            item.addDrag(SwipeLayout.DragEdge.Left, item.findViewById(R.id.bottom_wrapper));
-            item.addDrag(SwipeLayout.DragEdge.Right, item.findViewById(R.id.bottom_wrapper_2));
-
-            return new CustomViewHolder(view);
+            if(viewType == TYPE_ITEM) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend, parent, false);
+                return new CustomViewHolder(view);
+            }else if(viewType == TYPE_HEADER){
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend_header, parent, false);
+                return new CustomHeaderViewHolder(view);
+            }
+            throw new RuntimeException("there is no type that matches the type " + viewType + " + make sure your using types correctly");
         }
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-            Glide.with
-                    (holder.itemView.getContext())
-                    .load(userModels.get(position).profileImageUrl)
-                    .apply(new RequestOptions().circleCrop())
-                    .into(((CustomViewHolder) holder).imageView);
-            ((CustomViewHolder) holder).textViewId.setText(userModels.get(position).userName);
+            if(holder instanceof CustomViewHolder){
+                UserModel item = (UserModel)list.get(position);
+                Glide.with
+                        (holder.itemView.getContext())
+                        .load(item.getProfileImageUrl())
+                        .apply(new RequestOptions().circleCrop())
+                        .into(((CustomViewHolder) holder).imageView);
+                ((CustomViewHolder) holder).textViewId.setText(item.getUserName());
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), InfoActivity.class);
-                    intent.putExtra("destinationUid", userModels.get(position).uid);
-                    ActivityOptions activityOptions = null;
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                        activityOptions = ActivityOptions.makeCustomAnimation(view.getContext(), R.anim.fromtop, R.anim.tostop);
-                        startActivity(intent, activityOptions.toBundle());
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(view.getContext(), InfoActivity.class);
+                        intent.putExtra("destinationUid", userModels.get(position).uid);
+                        ActivityOptions activityOptions = null;
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                            activityOptions = ActivityOptions.makeCustomAnimation(view.getContext(), R.anim.fromtop, R.anim.tostop);
+                            startActivity(intent, activityOptions.toBundle());
+                        }
                     }
-
+                });
+                if (item.getComment() != null) {
+                    ((CustomViewHolder) holder).textView_comment.setText(item.getComment());
                 }
-            });
-            if (userModels.get(position).comment != null) {
-                ((CustomViewHolder) holder).textView_comment.setText(userModels.get(position).comment);
+            }else if(holder instanceof CustomHeaderViewHolder){
+                HeaderModel item = (HeaderModel)list.get(position);
+                ((CustomHeaderViewHolder)holder).title.setText(item.getHeader());
+                ((CustomHeaderViewHolder)holder).titleCount.setText("( "+userModels.size()+" )");
             }
-            ((CustomViewHolder) holder).imageView_hello.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(view.getContext(), "hello", Toast.LENGTH_SHORT).show();
-                }
-            });
-            ((CustomViewHolder) holder).imageView_chat.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(view.getContext(), "chat", Toast.LENGTH_SHORT).show();
-                }
-            });
-            ((CustomViewHolder) holder).imageView_call.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(view.getContext(), "call", Toast.LENGTH_SHORT).show();
-                }
-            });
-            ((CustomViewHolder) holder).imageView_sns.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(view.getContext(), "sns", Toast.LENGTH_SHORT).show();
-                }
-            });
-            ((CustomViewHolder) holder).imageView_chat.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(view.getContext(), "chat", Toast.LENGTH_SHORT).show();
-                }
-            });
-            ((CustomViewHolder) holder).imageView_hide.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(view.getContext(), "hide", Toast.LENGTH_SHORT).show();
-                }
-            });
-            ((CustomViewHolder) holder).imageView_info.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), InfoActivity.class);
-                    intent.putExtra("destinationUid", userModels.get(position).uid);
-                    ActivityOptions activityOptions = null;
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                        activityOptions = ActivityOptions.makeCustomAnimation(view.getContext(), R.anim.fromtop, R.anim.tostop);
-                        startActivity(intent, activityOptions.toBundle());
-                    }
-                }
-            });
+
+
 
 
         }
 
         @Override
         public int getItemCount() {
-            return userModels.size();
+            return list.size();
         }
 
+        @Override
+        public int getItemViewType(int position) {
+            if(isPositionHeader(position)){
+                return TYPE_HEADER;
+            }
+            return TYPE_ITEM;
+        }
+        private boolean isPositionHeader(int position){
+            return list.get(position) instanceof HeaderModel;
+        }
 
         private class CustomViewHolder extends RecyclerView.ViewHolder {
             public ImageView imageView;
@@ -274,14 +242,17 @@ public class PeopleFragment extends Fragment {
                 textViewId = (TextView) view.findViewById(R.id.frienditem_id);
                 textViewPhone = (TextView) view.findViewById(R.id.frienditem_phone);
                 textView_comment = (TextView) view.findViewById(R.id.frienditem_textview_comment);
-                imageView_hello = (ImageView) view.findViewById(R.id.frienditem_hello);
-                imageView_chat = (ImageView) view.findViewById(R.id.frienditem_chat);
-                imageView_call = (ImageView) view.findViewById(R.id.frienditem_call);
-                imageView_sns = (ImageView) view.findViewById(R.id.frienditem_sns);
-                imageView_hide = (ImageView) view.findViewById(R.id.frienditem_hide);
-                imageView_info = (ImageView) view.findViewById(R.id.frienditem_infomation);
             }
         }
+        private class CustomHeaderViewHolder extends RecyclerView.ViewHolder {
+            public TextView title;
+            public TextView titleCount;
 
+            public CustomHeaderViewHolder(View view) {
+                super(view);
+                title = (TextView) view.findViewById(R.id.frienditem_header_id);
+                titleCount = (TextView) view.findViewById(R.id.frienditem_header_count);
+            }
+        }
     }
 }

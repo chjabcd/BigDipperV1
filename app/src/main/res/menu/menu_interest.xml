@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_people_search"
+        android:id="@+id/menu_interest_search"
         android:icon="@android:drawable/ic_menu_search"
         android:title="Search"
         app:showAsAction="ifRoom"
         app:actionViewClass="android.support.v7.widget.SearchView"/>
     <item
-        android:id="@+id/menu_people_login"
+        android:id="@+id/menu_interest_login"
         android:orderInCategory="100"
         android:title="로그인"
         />
 
     <item
-        android:id="@+id/menu_people_logout"
+        android:id="@+id/menu_interest_logout"
         android:orderInCategory="100"
         android:title="로그아웃"
         />
 
     <item
-        android:id="@+id/menu_people_a"
+        android:id="@+id/menu_interest_a"
         android:orderInCategory="100"
         android:title="다음"
         />

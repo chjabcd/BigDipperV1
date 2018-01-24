@@ -6,10 +6,22 @@ package com.bigdipper.chj.bigdipperv1.model;
 
 public abstract class ListModel {
 
-    public static final int TYPE_HEADER = 0;
-    public static final int TYPE_EVENT = 1;
+    private int listId;
+    private String name;
 
-    abstract public int getType();
+    public int getListId() {
+        return listId;
+    }
 
+    public void setListId(int listId) {
+        this.listId = listId;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

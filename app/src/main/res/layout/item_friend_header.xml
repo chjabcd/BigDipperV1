@@ -3,16 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/frienditem_swipe"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
-    android:background="@android:color/darker_gray">
+    android:layout_height="30dp"
+    android:background="@color/colorIcon">
 
             <TextView
                 android:text="이름"
-                android:textSize="16dp"
-                android:layout_toRightOf="@id/frienditem_imageview"
-                android:layout_margin="10dp"
+                android:textSize="12dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="10dp"
                 android:id="@+id/frienditem_header_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+    <TextView
+        android:textSize="10dp"
+        android:id="@+id/frienditem_header_count"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="6dp"
+        android:text="(0)"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

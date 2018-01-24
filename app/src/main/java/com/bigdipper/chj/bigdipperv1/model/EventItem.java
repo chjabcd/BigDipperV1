@@ -21,9 +21,5 @@ public class EventItem extends ListModel {
         this.item = item;
     }
 
-    @Override
-    public int getType() {
-        return TYPE_EVENT;
-    }
 
 }

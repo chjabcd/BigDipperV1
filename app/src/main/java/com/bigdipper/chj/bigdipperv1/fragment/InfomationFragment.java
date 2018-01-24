@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.bigdipper.chj.bigdipperv1.Manifest;
 import com.bigdipper.chj.bigdipperv1.R;
 import com.bigdipper.chj.bigdipperv1.infomation.InfomationEditActivity;
+import com.bigdipper.chj.bigdipperv1.model.InterestModel;
 import com.bigdipper.chj.bigdipperv1.model.PhoneBookModel;
 import com.bigdipper.chj.bigdipperv1.model.UserModel;
 import com.bumptech.glide.Glide;
@@ -74,6 +75,20 @@ public class InfomationFragment extends Fragment implements View.OnClickListener
         });
         Button phoneBookButton = (Button)view.findViewById(R.id.infomationFragment_button_phonebook);
         phoneBookButton.setOnClickListener(this);
+        Button interestButton = (Button)view.findViewById(R.id.infomationFragment_button_interest);
+        interestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<InterestModel> list = new ArrayList<>();
+                String[] name = new String[]{"자유의 여신상","타임스퀘어","엠파이어 스테이트 빌딩","월 스트리트","센트럴파크","유엔 본부","록펠러센터","자연사 박물관","그라운드 제로","백악관"};
+                for(int i=0;i<10;i++){
+                    InterestModel interestModel = new InterestModel(name[i],"landmark",null,null,null);
+                    FirebaseDatabase.getInstance().getReference().child("interest").push().setValue(interestModel);
+                }
+
+
+            }
+        });
 
         name = (TextView) view.findViewById(R.id.fragment_infomation_profile_name);
         mainName = (TextView) view.findViewById(R.id.fragment_infomation_edittext_name);

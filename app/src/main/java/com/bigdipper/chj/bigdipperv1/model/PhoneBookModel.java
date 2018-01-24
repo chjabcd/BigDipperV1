@@ -30,8 +30,4 @@ public class PhoneBookModel extends ListModel{
         public String officeTitle;
     }
 
-    @Override
-    public int getType() {
-        return TYPE_EVENT;
-    }
 }

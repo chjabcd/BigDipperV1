@@ -21,8 +21,8 @@ import android.widget.Toast;
 import com.bigdipper.chj.bigdipperv1.chat.MessageActivity;
 import com.bigdipper.chj.bigdipperv1.fragment.InfomationFragment;
 import com.bigdipper.chj.bigdipperv1.fragment.ChatFragment;
+import com.bigdipper.chj.bigdipperv1.fragment.InterestFragment;
 import com.bigdipper.chj.bigdipperv1.fragment.PeopleFragment;
-import com.bigdipper.chj.bigdipperv1.fragment.PeopleFragmentTest;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
                         return true;
                     case R.id.action_interest:
-                        getFragmentManager().beginTransaction().replace(R.id.mainactivity_framelayout,new InfomationFragment()).commit();
+                        getFragmentManager().beginTransaction().replace(R.id.mainactivity_framelayout,new InterestFragment()).commit();
 
                         return true;
                     case R.id.action_bigdipper:

@@ -104,6 +104,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+        <Button
+            android:id="@+id/infomationFragment_button_interest"
+            android:text="관심사 등록"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </ScrollView>

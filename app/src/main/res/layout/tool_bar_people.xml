@@ -18,9 +18,8 @@
 
         </android.support.v7.widget.Toolbar>
 
-
-
     </LinearLayout>
+
     <ImageView
         android:background="@color/colorIcon"
         android:layout_width="match_parent"

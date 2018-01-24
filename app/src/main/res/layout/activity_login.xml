@@ -23,8 +23,8 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/login_backbox"
         android:orientation="vertical"
-        android:layout_width="654px"
-        android:layout_height="725px">
+        android:layout_width="954px"
+        android:layout_height="1125px">
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -51,6 +51,12 @@
             android:layout_height="match_parent"
             android:paddingLeft="10dp" />
     </android.support.design.widget.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:text="자동 로그인"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     <Button
         android:layout_gravity="center_horizontal"
