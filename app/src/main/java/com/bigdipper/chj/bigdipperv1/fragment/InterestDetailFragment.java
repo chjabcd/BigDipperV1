@@ -75,7 +75,7 @@ public class InterestDetailFragment extends Fragment {
             public void onClick(View view) {
                 String fragmentTag = view.getClass().getSimpleName();
                 getFragmentManager().popBackStack(fragmentTag,FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                getFragmentManager().beginTransaction().replace(R.id.mainactivity_framelayout,new InterestDetailRegistFragment().newInstance(interestName)).addToBackStack(null).commit();
+                getFragmentManager().beginTransaction().replace(R.id.mainactivity_framelayout,new InterestDetailRegistFragment().newInstance(interestName)).addToBackStack("tag").commit();
             }
         });
 
