@@ -168,8 +168,7 @@ public class InterestFragment extends Fragment {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if(holder instanceof CustomViewHolder) {
-                final InterestModel item = (InterestModel) interestModels.get(position);
-                final String interestUid = interestModels.get(position).interestUid;
+                final InterestModel item = (InterestModel) list.get(position);
                 CustomViewHolder viewHolder = (CustomViewHolder)holder;
                 Glide.with
                         (holder.itemView.getContext())
@@ -180,7 +179,7 @@ public class InterestFragment extends Fragment {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        getFragmentManager().beginTransaction().replace(R.id.mainactivity_framelayout, InterestDetailFragment.newInstance(item)).commit();
+                        getFragmentManager().beginTransaction().replace(R.id.mainactivity_framelayout, InterestDetailFragment.newInstance(item.interestUid,item.interestName)).addToBackStack(null).commit();
                     }
                 });
             }else if(holder instanceof CustomViewHeaderHolder){
