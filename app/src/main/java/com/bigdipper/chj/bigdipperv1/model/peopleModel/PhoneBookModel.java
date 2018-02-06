@@ -1,21 +1,21 @@
-package com.bigdipper.chj.bigdipperv1.model;
+package com.bigdipper.chj.bigdipperv1.model.peopleModel;
 
+import com.bigdipper.chj.bigdipperv1.model.peopleModel.ListModel;
+
+import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by chj on 2017-12-26.
+ * Created by chj on 2018-01-04.
  */
 
-public class UserModel {
-    public String userName;
-    public String profileImageUrl;
-    public String uid;
-    public String pushToken;
-    public String comment;
+public class PhoneBookModel extends ListModel {
 
-    public Map<String,PhoneBook> phonebook;
 
-    public static class PhoneBook{
+    public Map<String,Id> phoneList = new HashMap<>();
+
+    public static class Id{
+        public String uid;
         public String id;
         public String name;
         public String phoneNumber;
@@ -31,6 +31,5 @@ public class UserModel {
         public String office;
         public String officeTitle;
     }
-
 
 }

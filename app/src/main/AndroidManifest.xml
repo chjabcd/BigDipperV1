@@ -5,6 +5,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:allowBackup="true"
@@ -23,7 +27,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignupActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".chat.MessageActivity" />
+        <activity android:name=".chat.activity.MessageActivity" />
 
         <service android:name=".service.MyFirebaseMessagingService">
             <intent-filter>
@@ -33,7 +37,11 @@
 
         <activity android:name=".people.InfoActivity" />
         <activity android:name=".fragment.InfoFragment" />
-        <activity android:name=".InterestActivity"></activity>
+        <activity android:name=".InterestActivity" />
+        <activity android:name=".infomation.InfomationEditActivity" />
+        <activity android:name=".chat.activity.SelectPeopleActivity" />
+        <activity android:name=".interest.RegistSelectPeopleActivity" />
+        <activity android:name=".chat.activity.GroupMessageActivity"></activity>
     </application>
 
 </manifest>

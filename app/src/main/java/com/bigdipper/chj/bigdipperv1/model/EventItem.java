@@ -1,5 +1,7 @@
 package com.bigdipper.chj.bigdipperv1.model;
 
+import com.bigdipper.chj.bigdipperv1.model.peopleModel.ListModel;
+
 /**
  * Created by chj on 2018-01-12.
  */
@@ -21,9 +23,5 @@ public class EventItem extends ListModel {
         this.item = item;
     }
 
-    @Override
-    public int getType() {
-        return TYPE_EVENT;
-    }
 
 }

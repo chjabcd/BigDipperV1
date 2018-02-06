@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="310dp">
+
+            <ImageView
+                android:background="@drawable/people_info_background"
+                android:layout_width="match_parent"
+                android:layout_height="310dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/fragment_infomation_edit_complete"
+                    android:textSize="18dp"
+                    android:text="완료"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_gravity="right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/fragment_infomation_edit_profileimage"
+                    android:src="@drawable/ic_chat_black_24dp"
+                    android:layout_gravity="center"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp" />
+                <TextView
+                    android:textSize="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="이름"
+                    android:letterSpacing="0.5"
+                    android:id="@+id/fragment_infomation_edit_edittext_name"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal">
+
+                    <ImageView
+                        android:src="@drawable/ic_account_circle_black_24dp"
+                        android:layout_gravity="center"
+                        android:id="@+id/fragment_infomation_edit_hello"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" />
+                    <ImageView
+                        android:src="@drawable/ic_account_circle_black_24dp"
+                        android:layout_toRightOf="@+id/fragment_infomation_edit_hello"
+                        android:id="@+id/fragment_infomation_edit_chat"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" />
+                    <ImageView
+                        android:src="@drawable/ic_account_circle_black_24dp"
+                        android:layout_toRightOf="@+id/fragment_infomation_edit_chat"
+                        android:id="@+id/fragment_infomation_edit_call"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" />
+                    <ImageView
+                        android:src="@drawable/ic_account_circle_black_24dp"
+                        android:layout_toRightOf="@+id/fragment_infomation_edit_call"
+                        android:id="@+id/fragment_infomation_edit_sns"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/fragment_infomation_edit_profile"/>
+        </LinearLayout>
+
+        <Button
+            android:text="현재 상태 메세지"
+            android:id="@+id/fragment_infomation_edit_button_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:text="주소록 가져오기"
+            android:id="@+id/fragment_infomation_edit_button_phonebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</ScrollView>

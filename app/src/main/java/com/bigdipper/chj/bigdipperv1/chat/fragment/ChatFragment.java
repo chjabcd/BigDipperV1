@@ -1,4 +1,4 @@
-package com.bigdipper.chj.bigdipperv1.fragment;
+package com.bigdipper.chj.bigdipperv1.chat.fragment;
 
 import android.app.ActivityOptions;
 import android.app.Fragment;
@@ -6,21 +6,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigdipper.chj.bigdipperv1.MainActivity;
 import com.bigdipper.chj.bigdipperv1.R;
-import com.bigdipper.chj.bigdipperv1.chat.MessageActivity;
-import com.bigdipper.chj.bigdipperv1.model.ChatModel;
-import com.bigdipper.chj.bigdipperv1.model.UserModel;
+import com.bigdipper.chj.bigdipperv1.chat.activity.GroupMessageActivity;
+import com.bigdipper.chj.bigdipperv1.chat.activity.MessageActivity;
+import com.bigdipper.chj.bigdipperv1.model.chatModel.ChatModel;
+import com.bigdipper.chj.bigdipperv1.model.peopleModel.UserModel;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -61,17 +65,33 @@ public class ChatFragment extends Fragment{
         setHasOptionsMenu(true);
 
         toolbar = (Toolbar)view.findViewById(R.id.toolbar_chat);
-        drawerLayout = (DrawerLayout)view.findViewById(R.id.fragment_chat_drawerlayout);
+
         MainActivity activity = (MainActivity)getActivity();
         activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+        activity.setTitle("Chat");
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(activity,drawerLayout,toolbar,0,0);
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
 
         return view;
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_chat,menu);
+        SearchView searchView = (SearchView)menu.findItem(R.id.menu_chat_search).getActionView();
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+    }
+
     class ChatRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         private List<ChatModel> chatModels = new ArrayList<>();
@@ -136,29 +156,38 @@ public class ChatFragment extends Fragment{
             //메세지를 내림차순으로 정렬 후 마지막 메세지의 키값을 가져옴
             Map<String,ChatModel.Comment> commentMap = new TreeMap<>(Collections.reverseOrder());
             commentMap.putAll(chatModels.get(position).comments);
-            String lastMessageKey = (String) commentMap.keySet().toArray()[0];
-            customViewHolder.textView_last_message.setText(chatModels.get(position).comments.get(lastMessageKey).message);
+            if(commentMap.keySet().toArray().length > 0) {
+                String lastMessageKey = (String) commentMap.keySet().toArray()[0];
+                customViewHolder.textView_last_message.setText(chatModels.get(position).comments.get(lastMessageKey).message);
 
+
+
+                //TimeStamp
+                simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+                long unixTime = (long) chatModels.get(position).comments.get(lastMessageKey).timestamp;
+                Date date = new Date(unixTime);
+                customViewHolder.textView_timestamp.setText(simpleDateFormat.format(date));
+            }
             customViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), MessageActivity.class);
-                    intent.putExtra("destinationUid", destinationUsers.get(position));
+                    Intent intent = null;
+                    if(chatModels.get(position).user.size() > 2) {
+                        intent = new Intent(view.getContext(), GroupMessageActivity.class);
+                    }else{
+                        intent = new Intent(view.getContext(), MessageActivity.class);
+                        intent.putExtra("destinationUid", destinationUsers.get(position));
+                    }
+
 
                     ActivityOptions activityOptions = null;
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                        activityOptions = ActivityOptions.makeCustomAnimation(view.getContext(), R.anim.fromright,R.anim.toleft);
-                        startActivity(intent,activityOptions.toBundle());
+                        activityOptions = ActivityOptions.makeCustomAnimation(view.getContext(), R.anim.fromright, R.anim.toleft);
+                        startActivity(intent, activityOptions.toBundle());
                     }
 
                 }
             });
-
-            //TimeStamp
-            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
-            long unixTime = (long) chatModels.get(position).comments.get(lastMessageKey).timestamp;
-            Date date = new Date(unixTime);
-            customViewHolder.textView_timestamp.setText(simpleDateFormat.format(date));
 
         }
 

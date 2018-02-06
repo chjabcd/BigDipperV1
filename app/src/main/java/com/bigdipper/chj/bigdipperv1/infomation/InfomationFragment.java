@@ -1,12 +1,10 @@
-package com.bigdipper.chj.bigdipperv1.fragment;
+package com.bigdipper.chj.bigdipperv1.infomation;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
@@ -15,15 +13,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.bigdipper.chj.bigdipperv1.Manifest;
 import com.bigdipper.chj.bigdipperv1.R;
-import com.bigdipper.chj.bigdipperv1.model.PhoneBookModel;
+import com.bigdipper.chj.bigdipperv1.model.interestModel.InterestModel;
+import com.bigdipper.chj.bigdipperv1.model.peopleModel.PhoneBookModel;
+import com.bigdipper.chj.bigdipperv1.model.peopleModel.UserModel;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,6 +41,14 @@ public class InfomationFragment extends Fragment implements View.OnClickListener
 
     private List<PhoneBookModel> phoneBookModels;
     private FirebaseDatabase firebaseDatabase;
+    private UserModel userModel;
+    private TextView name;
+    private TextView phone;
+    private TextView address;
+    private ImageView profileImage;
+    private TextView mainName;
+    private TextView edit;
+
 
 
     @Nullable
@@ -46,10 +57,6 @@ public class InfomationFragment extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_infomation,container,false);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-
-
-
-
 
         Button commentButton = (Button)view.findViewById(R.id.infomationFragment_button_comment);
         commentButton.setOnClickListener(new View.OnClickListener() {
@@ -60,15 +67,61 @@ public class InfomationFragment extends Fragment implements View.OnClickListener
         });
         Button phoneBookButton = (Button)view.findViewById(R.id.infomationFragment_button_phonebook);
         phoneBookButton.setOnClickListener(this);
+        Button interestButton = (Button)view.findViewById(R.id.infomationFragment_button_interest);
+        interestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<InterestModel> list = new ArrayList<>();
+                String[] name = new String[]{"자유의 여신상","타임스퀘어","엠파이어 스테이트 빌딩","월 스트리트","센트럴파크","유엔 본부","록펠러센터","자연사 박물관","그라운드 제로","백악관"};
+                for(int i=0;i<10;i++){
+                    InterestModel interestModel = new InterestModel(name[i],"landmark",null,null,null);
+                    FirebaseDatabase.getInstance().getReference().child("interest").push().setValue(interestModel);
+                }
 
 
+            }
+        });
+
+        name = (TextView) view.findViewById(R.id.fragment_infomation_profile_name);
+        mainName = (TextView) view.findViewById(R.id.fragment_infomation_edittext_name);
+        phone = (TextView) view.findViewById(R.id.fragment_infomation_profile_phonenumber);
+        address = (TextView) view.findViewById(R.id.fragment_infomation_profile_address);
+        profileImage = (ImageView) view.findViewById(R.id.fragment_infomation_profileimage);
+        edit = (TextView) view.findViewById(R.id.fragment_infomation_textview_edit);
+
+        String myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        FirebaseDatabase.getInstance().getReference().child("users").child(myUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userModel = dataSnapshot.getValue(UserModel.class);
+                Glide.with(profileImage.getContext())
+                        .load(userModel.profileImageUrl)
+                        .apply(new RequestOptions().circleCrop())
+                        .into(profileImage);
+                name.setText(userModel.userName.toString());
+                mainName.setText(userModel.userName.toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().beginTransaction().replace(R.id.mainactivity_framelayout,new InfomationEditFragment()).commit();
+            }
+        });
 
 
         return view;
     }
 
 
-
+    //상태메세지
     void showDialog(Context context){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -201,7 +254,5 @@ public class InfomationFragment extends Fragment implements View.OnClickListener
             firebaseDatabase.getReference().child("users").child(uid).child("phonebook").push().setValue(phoneId);
         }
         cursor.close();
-
-
     }
 }
