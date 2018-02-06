@@ -1,4 +1,4 @@
-package com.bigdipper.chj.bigdipperv1.fragment;
+package com.bigdipper.chj.bigdipperv1.interest;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -17,10 +17,9 @@ import android.widget.TextView;
 
 import com.bigdipper.chj.bigdipperv1.MainActivity;
 import com.bigdipper.chj.bigdipperv1.R;
-import com.bigdipper.chj.bigdipperv1.model.HeaderModel;
-import com.bigdipper.chj.bigdipperv1.model.InterestHeaderModel;
-import com.bigdipper.chj.bigdipperv1.model.InterestListModel;
-import com.bigdipper.chj.bigdipperv1.model.InterestModel;
+import com.bigdipper.chj.bigdipperv1.model.interestModel.InterestHeaderModel;
+import com.bigdipper.chj.bigdipperv1.model.interestModel.InterestListModel;
+import com.bigdipper.chj.bigdipperv1.model.interestModel.InterestModel;
 import com.bigdipper.chj.bigdipperv1.service.SoundSearcher;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;

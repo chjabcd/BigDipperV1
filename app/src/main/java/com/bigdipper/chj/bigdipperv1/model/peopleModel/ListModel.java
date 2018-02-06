@@ -1,4 +1,4 @@
-package com.bigdipper.chj.bigdipperv1.model;
+package com.bigdipper.chj.bigdipperv1.model.peopleModel;
 
 /**
  * Created by chj on 2018-01-12.

@@ -1,6 +1,7 @@
-package com.bigdipper.chj.bigdipperv1.fragment;
+package com.bigdipper.chj.bigdipperv1.interest;
 
 import android.app.ActivityOptions;
+import android.app.Fragment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,14 +10,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bigdipper.chj.bigdipperv1.R;
-import com.bigdipper.chj.bigdipperv1.model.HeaderModel;
-import com.bigdipper.chj.bigdipperv1.model.ListModel;
-import com.bigdipper.chj.bigdipperv1.model.UserModel;
+import com.bigdipper.chj.bigdipperv1.model.chatModel.ChatModel;
+import com.bigdipper.chj.bigdipperv1.model.peopleModel.HeaderModel;
+import com.bigdipper.chj.bigdipperv1.model.peopleModel.ListModel;
+import com.bigdipper.chj.bigdipperv1.model.peopleModel.UserModel;
 import com.bigdipper.chj.bigdipperv1.people.InfoActivity;
 import com.bigdipper.chj.bigdipperv1.service.SoundSearcher;
 import com.bumptech.glide.Glide;
@@ -30,19 +34,29 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectPeopleActivity extends AppCompatActivity {
+public class RegistSelectPeopleActivity extends AppCompatActivity {
+    ChatModel chatModel = new ChatModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_people);
+        setContentView(R.layout.activity_regist_select_people);
 
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.select_people_activity_recyclerview);
-        recyclerView.setAdapter(new SelectPeopleRecyclerViewAdapter());
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.activity_interest_regist_recyclerview);
+        recyclerView.setAdapter(new InterestRegistSelectPeopleRecyclerViewAdapter());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        Button selectButton = (Button)findViewById(R.id.fragment_interest_detail_regist_addfriendbutton);
+        selectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
-    class SelectPeopleRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    class InterestRegistSelectPeopleRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         List<UserModel> userModels;
 
@@ -51,7 +65,7 @@ public class SelectPeopleActivity extends AppCompatActivity {
 
         List<ListModel> list;
 
-        public SelectPeopleRecyclerViewAdapter(final String s) {
+        public InterestRegistSelectPeopleRecyclerViewAdapter(final String s) {
             userModels = new ArrayList<>();
             list = new ArrayList<>();
             final String myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -79,7 +93,7 @@ public class SelectPeopleActivity extends AppCompatActivity {
             });
         }
 
-        public SelectPeopleRecyclerViewAdapter() {
+        public InterestRegistSelectPeopleRecyclerViewAdapter() {
             userModels = new ArrayList<>();
             list = new ArrayList<>();
             final String myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -126,7 +140,7 @@ public class SelectPeopleActivity extends AppCompatActivity {
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
             if(holder instanceof CustomViewHolder){
-                UserModel item = (UserModel)list.get(position);
+                final UserModel item = (UserModel)list.get(position);
                 Glide.with
                         (holder.itemView.getContext())
                         .load(item.getProfileImageUrl())
@@ -149,11 +163,24 @@ public class SelectPeopleActivity extends AppCompatActivity {
                 if (item.getComment() != null) {
                     ((CustomViewHolder) holder).textView_comment.setText(item.getComment());
                 }
+                ((CustomViewHolder)holder).checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        //체크 된 상태
+                        if(b){
+                            chatModel.users.put(item.uid,true);
+                        }//체크 취소 상태
+                        else{
+                            chatModel.users.remove(item);
+                        }
+                    }
+                });
             }else if(holder instanceof CustomHeaderViewHolder){
                 HeaderModel item = (HeaderModel)list.get(position);
                 ((CustomHeaderViewHolder)holder).title.setText(item.getHeader());
                 ((CustomHeaderViewHolder)holder).titleCount.setText("( "+userModels.size()+" )");
             }
+
 
 
 

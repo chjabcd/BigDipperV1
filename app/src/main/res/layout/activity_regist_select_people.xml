@@ -5,16 +5,16 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.bigdipper.chj.bigdipperv1.chat.activity.SelectPeopleActivity">
+    tools:context="com.bigdipper.chj.bigdipperv1.interest.RegistSelectPeopleActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/select_people_activity_recyclerview"
+        android:id="@+id/activity_interest_regist_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="500dp"></android.support.v7.widget.RecyclerView>
-    
+
     <Button
-        android:id="@+id/selectFriendActivity_button"
-        android:text="채팅방 만들기"
+        android:id="@+id/activity_interest_regist_button"
+        android:text="선택하기"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

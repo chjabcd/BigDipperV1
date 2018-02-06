@@ -1,4 +1,4 @@
-package com.bigdipper.chj.bigdipperv1.fragment;
+package com.bigdipper.chj.bigdipperv1.infomation;
 
 import android.app.Fragment;
 import android.os.Bundle;

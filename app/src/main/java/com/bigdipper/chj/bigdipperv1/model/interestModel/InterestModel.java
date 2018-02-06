@@ -1,7 +1,4 @@
-package com.bigdipper.chj.bigdipperv1.model;
-
-import java.util.HashMap;
-import java.util.Map;
+package com.bigdipper.chj.bigdipperv1.model.interestModel;
 
 /**
  * Created by chj on 2018-01-23.

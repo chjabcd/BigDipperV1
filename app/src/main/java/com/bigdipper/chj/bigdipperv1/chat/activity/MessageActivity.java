@@ -1,4 +1,4 @@
-package com.bigdipper.chj.bigdipperv1.chat;
+package com.bigdipper.chj.bigdipperv1.chat.activity;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -16,9 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigdipper.chj.bigdipperv1.R;
-import com.bigdipper.chj.bigdipperv1.model.ChatModel;
+import com.bigdipper.chj.bigdipperv1.model.chatModel.ChatModel;
 import com.bigdipper.chj.bigdipperv1.model.NotificationModel;
-import com.bigdipper.chj.bigdipperv1.model.UserModel;
+import com.bigdipper.chj.bigdipperv1.model.peopleModel.UserModel;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -350,7 +350,9 @@ public class MessageActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-        databaseReference.removeEventListener(valueEventListener);
+        if(valueEventListener != null) {
+            databaseReference.removeEventListener(valueEventListener);
+        }
         finish();
         overridePendingTransition(R.anim.fromleft,R.anim.toright);
         //test

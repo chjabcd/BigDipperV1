@@ -1,13 +1,10 @@
-package com.bigdipper.chj.bigdipperv1.fragment;
+package com.bigdipper.chj.bigdipperv1.infomation;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
@@ -18,14 +15,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bigdipper.chj.bigdipperv1.Manifest;
 import com.bigdipper.chj.bigdipperv1.R;
-import com.bigdipper.chj.bigdipperv1.infomation.InfomationEditActivity;
-import com.bigdipper.chj.bigdipperv1.model.InterestModel;
-import com.bigdipper.chj.bigdipperv1.model.PhoneBookModel;
-import com.bigdipper.chj.bigdipperv1.model.UserModel;
+import com.bigdipper.chj.bigdipperv1.model.interestModel.InterestModel;
+import com.bigdipper.chj.bigdipperv1.model.peopleModel.PhoneBookModel;
+import com.bigdipper.chj.bigdipperv1.model.peopleModel.UserModel;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,8 +27,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
 
 import java.util.ArrayList;
 import java.util.HashMap;

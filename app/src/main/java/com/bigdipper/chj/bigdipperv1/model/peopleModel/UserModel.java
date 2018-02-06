@@ -1,12 +1,12 @@
-package com.bigdipper.chj.bigdipperv1.model;
+package com.bigdipper.chj.bigdipperv1.model.peopleModel;
 
-import java.util.Map;
+import com.bigdipper.chj.bigdipperv1.model.peopleModel.ListModel;
 
 /**
  * Created by chj on 2017-12-26.
  */
 
-public class UserModel extends ListModel{
+public class UserModel extends ListModel {
 
     public UserModel() {
     }

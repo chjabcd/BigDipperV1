@@ -98,9 +98,11 @@
                 android:layout_height="1dp" />
 
             <ImageView
-                android:background="@android:color/darker_gray"
-                android:layout_width="match_parent"
-                android:layout_height="100dp" />
+                android:src="@drawable/ic_add_to_photos_black_24dp"
+                android:id="@+id/fragment_interest_detail_regist_photoregistbutton"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="20dp"/>
 
             <TextView
                 android:layout_marginTop="10dp"
@@ -114,13 +116,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
 
-            <DatePicker
-                android:id="@+id/fragment_interest_detail_regist_datepicker"
-                android:spinnersShown="true"
-                android:datePickerMode="spinner"
-                android:calendarViewShown="false"
+
+
+            <TextView
+                android:text="시작날짜"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:gravity="right"
+                android:text="2011.11.11"
+                android:id="@+id/fragment_interest_detail_regist_startdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="종료날짜"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:gravity="right"
+                android:text="2011.11.11"
+                android:id="@+id/fragment_interest_detail_regist_enddate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_marginTop="10dp"
@@ -134,25 +154,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
 
-            <LinearLayout
-                android:id="@+id/fragment_interest_detail_regist_addfriend"
-                android:orientation="horizontal"
+            <TextView
+                android:id="@+id/fragment_interest_detail_regist_addfriendtext"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content" />
 
-                <ImageView
-                    android:layout_margin="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_add_to_photos_black_24dp"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
-                <TextView
-                    android:text="추가하기"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
+            <Button
+                android:text="추가하기"
+                android:id="@+id/fragment_interest_detail_regist_addfriendbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_marginTop="10dp"
@@ -166,10 +177,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
 
-            <ImageView
-                android:background="@android:color/darker_gray"
+            <EditText
+                android:id="@+id/fragment_interest_detail_regist_comment"
                 android:layout_width="match_parent"
-                android:layout_height="100dp" />
+                android:layout_height="150dp" />
 
             <Button
                 android:layout_margin="10dp"

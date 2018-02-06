@@ -1,5 +1,7 @@
 package com.bigdipper.chj.bigdipperv1.model;
 
+import com.bigdipper.chj.bigdipperv1.model.peopleModel.ListModel;
+
 /**
  * Created by chj on 2018-01-12.
  */

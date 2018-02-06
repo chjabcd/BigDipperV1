@@ -1,10 +1,10 @@
-package com.bigdipper.chj.bigdipperv1.model;
+package com.bigdipper.chj.bigdipperv1.model.interestModel;
 
 /**
- * Created by chj on 2018-01-12.
+ * Created by chj on 2018-01-24.
  */
 
-public class HeaderModel extends ListModel {
+public class InterestHeaderModel extends InterestListModel {
 
     private String header;
 
@@ -15,6 +15,4 @@ public class HeaderModel extends ListModel {
     public void setHeader(String header) {
         this.header = header;
     }
-
-
 }

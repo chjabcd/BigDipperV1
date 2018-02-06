@@ -1,7 +1,9 @@
-package com.bigdipper.chj.bigdipperv1.fragment;
+package com.bigdipper.chj.bigdipperv1.people;
 
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,20 +12,24 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigdipper.chj.bigdipperv1.MainActivity;
 import com.bigdipper.chj.bigdipperv1.R;
-import com.bigdipper.chj.bigdipperv1.model.HeaderModel;
-import com.bigdipper.chj.bigdipperv1.model.ListModel;
-import com.bigdipper.chj.bigdipperv1.model.UserModel;
-import com.bigdipper.chj.bigdipperv1.people.InfoActivity;
+import com.bigdipper.chj.bigdipperv1.chat.activity.SelectPeopleActivity;
+import com.bigdipper.chj.bigdipperv1.model.peopleModel.HeaderModel;
+import com.bigdipper.chj.bigdipperv1.model.peopleModel.ListModel;
+import com.bigdipper.chj.bigdipperv1.model.peopleModel.UserModel;
 import com.bigdipper.chj.bigdipperv1.service.SoundSearcher;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -113,6 +119,17 @@ public class PeopleFragment extends Fragment {
 
         List<ListModel> list;
 
+        private int position;
+
+        public int getPosition() {
+
+            return position;
+        }
+
+        public void setPosition(int position) {
+            this.position = position;
+        }
+
         public PeopleFragmentRecyclerViewAdapter(final String s) {
             userModels = new ArrayList<>();
             list = new ArrayList<>();
@@ -188,7 +205,7 @@ public class PeopleFragment extends Fragment {
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
             if(holder instanceof CustomViewHolder){
-                UserModel item = (UserModel)list.get(position);
+                final UserModel item = (UserModel)list.get(position);
                 Glide.with
                         (holder.itemView.getContext())
                         .load(item.getProfileImageUrl())
@@ -196,18 +213,34 @@ public class PeopleFragment extends Fragment {
                         .into(((CustomViewHolder) holder).imageView);
                 ((CustomViewHolder) holder).textViewId.setText(item.getUserName());
 
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
                     @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(view.getContext(), InfoActivity.class);
-                        intent.putExtra("destinationUid", userModels.get(position).uid);
-                        ActivityOptions activityOptions = null;
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                            activityOptions = ActivityOptions.makeCustomAnimation(view.getContext(), R.anim.fromtop, R.anim.tostop);
-                            startActivity(intent, activityOptions.toBundle());
-                        }
+                    public void onCreateContextMenu(ContextMenu contextMenu, final View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+                        String[] menuName = {"친구 정보","안부","채팅","전화","SNS","숨김"};
+                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                        builder.setTitle(item.getUserName());
+                        builder.setItems(menuName, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                switch (i){
+                                    case 0:
+                                        startActivity(new Intent(view.getContext(),InfoActivity.class));
+                                        break;
+                                    case 1:
+                                        Toast.makeText(view.getContext(), "1", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 2:
+                                        Toast.makeText(view.getContext(), "2", Toast.LENGTH_SHORT).show();
+                                        break;
+                                }
+
+
+                            }
+                        });
+                        builder.show();
                     }
                 });
+
                 if (item.getComment() != null) {
                     ((CustomViewHolder) holder).textView_comment.setText(item.getComment());
                 }
@@ -238,7 +271,7 @@ public class PeopleFragment extends Fragment {
             return list.get(position) instanceof HeaderModel;
         }
 
-        private class CustomViewHolder extends RecyclerView.ViewHolder {
+        private class CustomViewHolder extends RecyclerView.ViewHolder{
             public ImageView imageView;
             public TextView textViewId;
             public TextView textViewPhone;
@@ -251,7 +284,9 @@ public class PeopleFragment extends Fragment {
                 textViewId = (TextView) view.findViewById(R.id.frienditem_id);
                 textViewPhone = (TextView) view.findViewById(R.id.frienditem_phone);
                 textView_comment = (TextView) view.findViewById(R.id.frienditem_textview_comment);
+
             }
+
         }
         private class CustomHeaderViewHolder extends RecyclerView.ViewHolder {
             public TextView title;
@@ -264,4 +299,5 @@ public class PeopleFragment extends Fragment {
             }
         }
     }
+
 }
