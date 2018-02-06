@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/fragment_people_coordinatorlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/tool_bar_interest_detail_regist"/>
+        </android.support.design.widget.AppBarLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="16dp"
+                android:text="공개범위"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:background="@android:color/black"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <RadioGroup
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/fragment_interest_detail_regist_radiobutton1"
+                    android:text="Dear 유저 전체공개"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RadioButton
+                    android:id="@+id/fragment_interest_detail_regist_radiobutton2"
+                    android:text="친구 공개(주소록에 있는 사용자)"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RadioButton
+                    android:id="@+id/fragment_interest_detail_regist_radiobutton3"
+                    android:text="특정 그룹 공개"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RadioButton
+                    android:id="@+id/fragment_interest_detail_regist_radiobutton4"
+                    android:text="친밀도 일정 이상 공개"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RadioButton
+                    android:id="@+id/fragment_interest_detail_regist_radiobutton5"
+                    android:text="친구 선택하기"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RadioButton
+                    android:id="@+id/fragment_interest_detail_regist_radiobutton6"
+                    android:text="나만 보기"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:textSize="16dp"
+                android:text="사진등록"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:background="@android:color/black"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <ImageView
+                android:background="@android:color/darker_gray"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:textSize="16dp"
+                android:text="날짜"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:background="@android:color/black"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <DatePicker
+                android:id="@+id/fragment_interest_detail_regist_datepicker"
+                android:spinnersShown="true"
+                android:datePickerMode="spinner"
+                android:calendarViewShown="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:textSize="16dp"
+                android:text="함께한 사람"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:background="@android:color/black"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <LinearLayout
+                android:id="@+id/fragment_interest_detail_regist_addfriend"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_add_to_photos_black_24dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+                <TextView
+                    android:text="추가하기"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:textSize="16dp"
+                android:text="메모/리뷰"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:background="@android:color/black"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <ImageView
+                android:background="@android:color/darker_gray"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+            <Button
+                android:layout_margin="10dp"
+                android:text="등록하기"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

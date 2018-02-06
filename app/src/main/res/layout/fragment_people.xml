@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_people_linearlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+                <android.support.design.widget.CoordinatorLayout
+                    android:id="@+id/fragment_people_coordinatorlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                        <android.support.design.widget.AppBarLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                                <include layout="@layout/tool_bar_people"/>
+                        </android.support.design.widget.AppBarLayout>
+
+                </android.support.design.widget.CoordinatorLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_below="@+id/fragment_people_coordinatorlayout"
+                    android:id="@+id/peoplefragment_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="20dp"
+            android:src="@android:drawable/stat_notify_chat"
+            android:id="@+id/peoplefragment_floatingButtom"
+            app:fabSize="normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <!--<android.support.design.widget.NavigationView-->
+            <!--android:id="@+id/fragment_people_navigationview"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_gravity="start"-->
+            <!--android:fitsSystemWindows="true"-->
+            <!--app:headerLayout="@layout/side_bar"-->
+            <!--app:menu="@menu/nav_item_people">-->
+        <!--</android.support.design.widget.NavigationView>-->
+
+        <!--<android.support.design.widget.NavigationView-->
+            <!--android:id="@+id/fragment_people_navigationview_right"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_gravity="end"-->
+            <!--android:fitsSystemWindows="false"-->
+            <!--app:headerLayout="@layout/side_bar"-->
+            <!--app:menu="@menu/nav_item_people">-->
+        <!--</android.support.design.widget.NavigationView>-->
+
+</RelativeLayout>

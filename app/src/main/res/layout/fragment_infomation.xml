@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="310dp">
+
+            <ImageView
+                android:background="@drawable/people_info_background"
+                android:layout_width="match_parent"
+                android:layout_height="310dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/fragment_infomation_textview_edit"
+                    android:textSize="18dp"
+                    android:text="편집"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_gravity="right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/fragment_infomation_profileimage"
+                    android:src="@drawable/ic_chat_black_24dp"
+                    android:layout_gravity="center"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp" />
+                <TextView
+                    android:textSize="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="이름"
+                    android:letterSpacing="0.5"
+                    android:id="@+id/fragment_infomation_edittext_name"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal">
+
+                    <ImageView
+                        android:src="@drawable/ic_account_circle_black_24dp"
+                        android:layout_gravity="center"
+                        android:id="@+id/fragment_infomation_hello"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" />
+                    <ImageView
+                        android:src="@drawable/ic_account_circle_black_24dp"
+                        android:layout_toRightOf="@+id/fragment_infomation_hello"
+                        android:id="@+id/fragment_infomation_chat"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" />
+                    <ImageView
+                        android:src="@drawable/ic_account_circle_black_24dp"
+                        android:layout_toRightOf="@+id/fragment_infomation_chat"
+                        android:id="@+id/fragment_infomation_call"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" />
+                    <ImageView
+                        android:src="@drawable/ic_account_circle_black_24dp"
+                        android:layout_toRightOf="@+id/fragment_infomation_call"
+                        android:id="@+id/fragment_infomation_sns"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/fragment_infomation_profile"/>
+    </LinearLayout>
+
+    <Button
+        android:text="현재 상태 메세지"
+        android:id="@+id/infomationFragment_button_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:text="주소록 가져오기"
+        android:id="@+id/infomationFragment_button_phonebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/infomationFragment_button_interest"
+            android:text="관심사 등록"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</ScrollView>
